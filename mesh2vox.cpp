@@ -112,10 +112,14 @@ void mark_occupy_voxel(Triangle3 &tri, int4 &color) {
     Point3 tri_bound_min = triangle_boundary(tri, B_MIN);
     int3 vox_bound_max = point3_to_voxel_cord(tri_bound_max);
     int3 vox_bound_min = point3_to_voxel_cord(tri_bound_min);
-
-    for (int i = vox_bound_min.v[0]; i <= vox_bound_max.v[0]; i++) {
-        for (int j = vox_bound_min.v[1]; j <= vox_bound_max.v[1]; j++) {
-            for (int k = vox_bound_min.v[2]; k <= vox_bound_max.v[2]; k++) {
+    
+    // Clip the min boundary at 0. (Voxels less than 0 will not be considered.) 
+    int vox_min_x = max(vox_bound_min.v[0], 0);
+    int vox_min_y = max(vox_bound_min.v[1], 0);
+    int vox_min_z = max(vox_bound_min.v[2], 0);
+    for (int i = vox_min_x; i <= vox_bound_max.v[0]; i++) {
+        for (int j = vox_min_y; j <= vox_bound_max.v[1]; j++) {
+            for (int k = vox_min_z; k <= vox_bound_max.v[2]; k++) {
                 // Calculate difference between voxel and unit cube
                 float scale = 1. / CUBESIZE;
                 Point3 unit_cube_centroid(0, 0, 0);
