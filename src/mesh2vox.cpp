@@ -162,14 +162,14 @@ void mark_occupy_voxel(Triangle3 &tri, int4 &color) {
     }
 }
 
-void dump_voxel(int4 voxel[MAX_VOX_X][MAX_VOX_Y][MAX_VOX_Z], int3 dim, const char fname[], const char scene[]){
+void dump_voxel(int4 voxel[MAX_VOX_X][MAX_VOX_Y][MAX_VOX_Z], int3 dim, const char fname[]){
     int hdim = dim.v[0];
     int wdim = dim.v[1];
     int ddim = dim.v[2];
     int cdim = 4;
     ofstream fout(fname, ios::out | ios::binary);
     fout << "CV\n";
-    fout << "# "<< scene<< "color voxel. Height, width, depth, channel\n";
+    fout << "# " << fname << "color voxel. Height, width, depth, channel\n";
     fout << hdim <<" "<< wdim <<" "<< ddim <<" "<< cdim <<"\n";
     fout << hdim*wdim*ddim*cdim<<"\n";
     for(int h = 0; h < hdim; ++h){
@@ -185,7 +185,7 @@ void dump_voxel(int4 voxel[MAX_VOX_X][MAX_VOX_Y][MAX_VOX_Z], int3 dim, const cha
     fout.close();
 }
 
-void ply_to_voxel(const string &filename) {
+void ply_to_voxel(const string &filename, const char *output_filename) {
     try
     {
         // Read the file and create a std::istringstream suitable
@@ -290,7 +290,7 @@ void ply_to_voxel(const string &filename) {
 
         // Write to file
         int3 dim(max_vox_x, max_vox_y, max_vox_z);
-        dump_voxel(global_voxel, dim, "sceneXXXX_XX.dat", "sceneXXXX_XX");
+        dump_voxel(global_voxel, dim, output_filename);
 	}
     catch (const std::exception & e)
     {
@@ -299,12 +299,17 @@ void ply_to_voxel(const string &filename) {
 }
 
 int main(int argc, char *argv[]) {
+    /*
+        argv[1]: input ply
+        argv[2]: output file
+    */
+    assert(argc == 3);
 #ifdef TAKE_MAX_AREA_COLOR
     printf("Using max area for color\n");
 #else
     printf("Using weighted mean for color\n");
 #endif
     printf("Reading file %s\n", argv[1]);
-    ply_to_voxel(argv[1]);
+    ply_to_voxel(argv[1], argv[2]);
     return 0;
 }
