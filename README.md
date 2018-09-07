@@ -21,10 +21,11 @@ make MEAN
 ```
 ### Visualization
 
+`scripts/read_buffer.py` can generate point-base `.ply` file for visualiztion tool such as meshlab
 ```
+cd scripts
 python3 read_buffer.py // generate .ply point cloud for visualization
 ```
-Use tools like meshlab to open the `.ply` file.
 
 ## References
 

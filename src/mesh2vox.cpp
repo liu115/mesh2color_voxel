@@ -58,9 +58,14 @@ void print_triangle3(Triangle3 &tri) {
     cout << "v3: ";
     print_point3(tri.v3);
 }
+
 // Set maximum size
 int4 global_voxel[MAX_VOX_X][MAX_VOX_Y][MAX_VOX_Z];
+// 4 channel for rgba, and last channel for triangle intersect area
+// this will be used to calculate the weighted average color
 float voxel_buffer[MAX_VOX_X][MAX_VOX_Y][MAX_VOX_Z][5];
+
+
 Point3 triangle_boundary(Triangle3 &tri, boundary_type type) {
     Point3 p;
     

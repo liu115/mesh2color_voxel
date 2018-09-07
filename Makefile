@@ -1,6 +1,7 @@
 CPPFLAGS= -Wall -O2 -std=c++11
-TARGET=mesh2vox.cpp
-UTILS=tinyply.cpp triangleCube.cpp polygon_3darea.cpp
+SRCDIR=src/
+TARGET=$(SRCDIR)mesh2vox.cpp
+UTILS=$(SRCDIR)tinyply.cpp $(SRCDIR)triangleCube.cpp $(SRCDIR)polygon_3darea.cpp
 #all:
 #	g++ $(CPPFLAGS) $(TARGET) $(UTILS)
 MEAN:
