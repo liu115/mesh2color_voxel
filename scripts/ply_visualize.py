@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 
 from utils import read_data
@@ -45,6 +46,11 @@ def color_voxel_label_to_ply(voxel, output_ply):
     print('output: ' + output_ply)
 
 
-color_voxel = read_data('sceneXXXX_XX.dat')
-print(color_voxel)
-color_voxel_label_to_ply(color_voxel, "voxel.ply")
+def main():
+    assert len(sys.argv) == 2
+    color_voxel = read_data(sys.argv[1])
+    print(color_voxel)
+    color_voxel_label_to_ply(color_voxel, "output.ply")
+
+if __name__ == '__main__':
+    main()
